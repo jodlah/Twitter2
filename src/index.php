@@ -1,6 +1,27 @@
 <?php
 include_once 'library.php';
 
+$mysqli = new mysqli(
+    '127.0.0.1',
+    'root',
+    'coderslab',
+    'twitter2'
+);
+
+$user = Users::loadUserById($mysqli, 11);
+
+var_dump($user);
+
+$user->setUsername('Robert');
+$user->saveToDB($mysqli);
+
+$users = Users::loadAllUsers($mysqli);
+
+var_dump($users);
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -15,16 +36,15 @@ include_once 'library.php';
     <form method="post" action="#">
         <label>Zaloguj się</label><br><br>
             Adres e-mail:<input type="text" name="email"><br>
-            Hasło:       <input type="text" name="psw"><br>
+            Hasło:       <input type="password" name="psw"><br>
         <button type="submit" name="submit">Wyślij</button>
     </form>
 </div>
 
 <div>
-    <form method="post" action="/AddUser.php">
+    <form method="post" action="registration.php">
         <button type="submit">Rejestracja</button>
     </form>
-
 </div>
 
 
