@@ -61,19 +61,23 @@ class Users
             if ($result == true) {
                 $this->id = $connection->insert_id;
                 return true;
-            } else {
+            }
+
+        }else {
                 $sql = "UPDATE users SET email='$this->email',
                                      username='$this->username',
                                      hashed_password='$this->hashedPassword'
                         WHERE id=$this->id;";
+
                 $result = $connection->query($sql);
+
                 if ($result == true) {
                     return true;
                 }
-            }
-            return false;
         }
+        return false;
     }
+
 
     static public function loadUserById(mysqli $connection, $id)
     {

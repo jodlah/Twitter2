@@ -8,16 +8,35 @@ $mysqli = new mysqli(
     'twitter2'
 );
 
-$user = Users::loadUserById($mysqli, 11);
+//$user = new Users();
+//$user = Users::loadUserById($mysqli, 11);
+//$user->getId();
 
-var_dump($user);
 
-$user->setUsername('Robert');
-$user->saveToDB($mysqli);
+//var_dump($user);
 
-$users = Users::loadAllUsers($mysqli);
+$tweet = new Tweet(21);
+$tweet->setText('blablabla');
+$tweet->setCreationDate('2016-09-28');
+$tweet->saveToTweetDB($mysqli);
 
-var_dump($users);
+
+
+
+
+var_dump($tweet);
+
+
+//$user = Users::loadUserById($mysqli, 11);
+//
+//var_dump($user);
+//
+//$user->setUsername('Robert');
+//$user->saveToDB($mysqli);
+//
+//$users = Users::loadAllUsers($mysqli);
+//
+//var_dump($users);
 
 
 

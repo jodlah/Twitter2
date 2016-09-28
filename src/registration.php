@@ -15,12 +15,12 @@ $user->setEmail($_POST['setEmail']);
 $user->setPassword($_POST['setPsw']);
 $user->saveToDB($mysqli);
 
-//$user = Users::loadUserById($mysqli, 100);
-//$user->getId();
-//$user->setUsername('Dawid');
-//$user->setEmail('dawid@twitter.pl');
-//$user->setPassword('4321');
-//$user->saveToDB($mysqli);
+$user = Users::loadUserById($mysqli, 21);
+$user->getId();
+$user->setUsername('Dawid');
+$user->setEmail('dawid@twitter.pl');
+$user->setPassword('4321');
+$user->saveToDB($mysqli);
 
 //$user->delete($mysqli);
 
