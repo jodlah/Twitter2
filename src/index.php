@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'library.php';
 
 $mysqli = new mysqli(
@@ -15,16 +16,13 @@ $mysqli = new mysqli(
 
 //var_dump($user);
 
-$tweet = new Tweet(21);
-$tweet->setText('blablabla');
-$tweet->setCreationDate('2016-09-28');
-$tweet->saveToTweetDB($mysqli);
-
-
-
-
-
-var_dump($tweet);
+//$tweet = new Tweet(30);
+//$tweet->setText('Lorem ipsum');
+//$tweet->setCreationDate('2016-09-29');
+//$tweet->saveToTweetyDB($mysqli);
+//
+//
+//var_dump($tweet);
 
 
 //$user = Users::loadUserById($mysqli, 11);
@@ -52,20 +50,18 @@ var_dump($tweet);
 <body>
 
 <div>
-    <form method="post" action="#">
-        <label>Zaloguj się</label><br><br>
-            Adres e-mail:<input type="text" name="email"><br>
-            Hasło:       <input type="password" name="psw"><br>
-        <button type="submit" name="submit">Wyślij</button>
+    <form method="post" action="login.php">
+        <label>LOGIN</label><br><br>
+            <input type="text" name="email" placeholder="e-mail"><br>
+            <input type="password" name="pwd" placeholder="password"><br>
+        <button type="submit" name="submit">LOGIN</button>
     </form>
 </div>
 
 <div>
-    <form method="post" action="registration.php">
-        <button type="submit">Rejestracja</button>
+    <form method="post" action="signUpForm.html">
+        <button type="submit">SIGN UP</button>
     </form>
 </div>
-
-
 </body>
 </html>

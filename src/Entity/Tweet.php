@@ -1,26 +1,18 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: jodlah
- * Date: 27.09.16
- * Time: 18:33
- */
+
 class Tweet
 {
     private $id;
-
-    private $userid;
-
+    private $userId;
     private $text;
-
     private $creationDate;
 
 
-    public function __construct($userid)
+    public function __construct()
     {
         $this->id = -1;
-        $this->userid = $userid;
+        $this->userId = "";
         $this->text = "";
         $this->creationDate = "";
     }
@@ -33,21 +25,20 @@ class Tweet
         return $this->id;
     }
 
-
-    /**
-     * @param int $userid
-     */
-    public function setUserid($userid)
-    {
-        $this->userid = $userid;
-    }
-
     /**
      * @return int
      */
-    public function getUserid()
+    public function getUserId()
     {
-        return $this->userid;
+        return $this->userId;
+    }
+
+    /**
+     * @param string $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
     }
 
     /**
@@ -82,20 +73,33 @@ class Tweet
         $this->creationDate = $creationDate;
     }
 
-    public function saveToTweetDB(mysqli $connection)
+    public function saveToTweetyDB(mysqli $connection)
     {
+        if ($this->id == -1) {
 
-        if($this->id == -1) {
-            $sql = "INSERT INTO tweety(userid, text, creation_date)
-                    VALUES ('$this->userid', '$this->text', '$this->creationDate')";
+            $sql = "INSERT INTO twetty(user_id, text, creation_date)
+                VALUES ('$this->userId', '$this->text', '$this->creationDate')";
 
             $result = $connection->query($sql);
 
-            if($result == true) {
+            if ($result == true) {
                 $this->id = $connection->insert_id;
                 return true;
             }
+
+        } else {
+            $sql = "UPDATE twetty SET userId='$this->userId',
+                                 text='$this->text',
+                                 creationDate='$this->creationDate'
+                    WHERE id=$this->id;";
+
+            $result = $connection->query($sql);
+
+            if ($result == true) {
+                return true;
+            }
         }
+        return false;
     }
 
 
@@ -111,9 +115,9 @@ class Tweet
 
             $loadedUser = new Tweet();
             $loadedUser->id = $row['id'];
-            $loadedUser->userId = $row['userId'];
+            $loadedUser->userId = $row['user_id'];
             $loadedUser->text = $row['text'];
-            $loadedUser->creationDate = $row['creationDate'];
+            $loadedUser->creationDate = $row['creation_date'];
 
             return $loadedUser;
         }
@@ -132,9 +136,9 @@ class Tweet
             foreach ($result as $row) {
                 $loadedUser = new Tweet();
                 $loadedUser->id = $row['id'];
-                $loadedUser->userId = $row['userId'];
+                $loadedUser->userId = $row['user_id'];
                 $loadedUser->text = $row['text'];
-                $loadedUser->creationDate = $row['creationDate'];
+                $loadedUser->creationDate = $row['creation_date'];
 
                 $ret[] = $loadedUser;
             }
@@ -153,9 +157,9 @@ class Tweet
             foreach ($result as $row) {
                 $loadedUser = new Tweet();
                 $loadedUser->id = $row['id'];
-                $loadedUser->userId = $row['userId'];
+                $loadedUser->userId = $row['user_id'];
                 $loadedUser->text = $row['text'];
-                $loadedUser->creationDate = $row['creationDate'];
+                $loadedUser->creationDate = $row['creation_date'];
 
                 $ret[] = $loadedUser;
             }
@@ -163,5 +167,29 @@ class Tweet
         return $ret;
     }
 
+    static public function printAllTweets (mysqli $connection)
+    {
+        $tweets = self::loadAllTweets($connection);
+        $table = '<table style="border: 1px solid black; width: 100%">';
+        foreach ($tweets as $tweet) {
+            //var_dump($tweet);
+            $table .= sprintf(
+                '
+                    <tr>
+                        <td>%s</td>
+                        <td>%s</td>
+                        <td>%s</td>
+                        <td>%s</td>
+                    </tr>
+                        ',
+                $tweet->id,
+                $tweet->userId,
+                $tweet->text,
+                $tweet->creationDate
+            );
+        }
+        $table .= '</table>';
+        echo $table;
+    }
 
 }

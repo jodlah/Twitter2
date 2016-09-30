@@ -39,6 +39,11 @@ class Users
         $this->hashedPassword = $newHashedPassword;
     }
 
+    public function getPassword()
+    {
+        return $this->hashedPassword;
+    }
+
     public function getEmail()
     {
         return $this->email;
@@ -63,7 +68,7 @@ class Users
                 return true;
             }
 
-        }else {
+        } else {
                 $sql = "UPDATE users SET email='$this->email',
                                      username='$this->username',
                                      hashed_password='$this->hashedPassword'
@@ -98,6 +103,21 @@ class Users
         }
 
         return null;
+    }
+
+    static public function loadUserByEmailAndPwd(mysqli $connection, $email)
+    {
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+
+        $result = $connection->query($sql);
+
+        if (!$row = $result->fetch_assoc()) {
+            echo "Your email or password is incorrect!";
+        } else {
+            $_SESSION['id'] = $row['id'];
+            header("Location: main.php");
+        }
+
     }
 
     static public function loadAllUsers(mysqli $connection)
