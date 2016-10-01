@@ -170,26 +170,26 @@ class Tweet
     static public function printAllTweets (mysqli $connection)
     {
         $tweets = self::loadAllTweets($connection);
-        $table = '<table style="border: 1px solid black; width: 100%">';
+        //$comment = Comment::loadCommentByTweetId($connection);
+        $div = '<div class="container">';
         foreach ($tweets as $tweet) {
-            //var_dump($tweet);
-            $table .= sprintf(
+            $div .= sprintf(
                 '
-                    <tr>
-                        <td>%s</td>
-                        <td>%s</td>
-                        <td>%s</td>
-                        <td>%s</td>
-                    </tr>
-                        ',
+                <div class="tweet">
+                    <p class="item">%s</p>
+                    <p class="item">%s</p>
+                    <p class="item">%s</p>
+                    <p class="item">%s</p>
+                </div>
+                ',
                 $tweet->id,
                 $tweet->userId,
                 $tweet->text,
                 $tweet->creationDate
             );
         }
-        $table .= '</table>';
-        echo $table;
+        $div .= '</div>';
+        echo $div;
     }
 
 }

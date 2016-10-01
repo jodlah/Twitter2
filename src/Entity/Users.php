@@ -34,7 +34,7 @@ class Users
 
     public function setPassword($newPassword)
     {
-        $newHashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+        $newHashedPassword = sha1($newPassword);
 
         $this->hashedPassword = $newHashedPassword;
     }
@@ -105,9 +105,9 @@ class Users
         return null;
     }
 
-    static public function loadUserByEmailAndPwd(mysqli $connection, $email)
+    static public function loadUserByEmailAndPwd(mysqli $connection, $email, $sha1pwd)
     {
-        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $sql = "SELECT * FROM users WHERE email = '$email' AND hashed_password='$sha1pwd'";
 
         $result = $connection->query($sql);
 
@@ -115,6 +115,8 @@ class Users
             echo "Your email or password is incorrect!";
         } else {
             $_SESSION['id'] = $row['id'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['username'] = $row['username'];
             header("Location: main.php");
         }
 

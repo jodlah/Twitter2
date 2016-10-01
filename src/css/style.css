@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+}
+
+.tweet {
+    border: 1px solid black;
+
+}
+
+.item {
+    display: inline-flex;
+    border: 1px solid black;
+}

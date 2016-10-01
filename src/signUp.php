@@ -2,19 +2,12 @@
 
 include_once "library.php";
 
-$mysqli = new mysqli(
-    '127.0.0.1',
-    'root',
-    'coderslab',
-    'twitter2'
-);
-
 $user = new Users;
 
 $user->setUsername($_POST['setUsername']);
 $user->setEmail($_POST['setEmail']);
 $user->setPassword($_POST['setPwd']);
-$user->saveToDB($mysqli);
+$user->saveToDB($connection);
 
 var_dump($user);
 

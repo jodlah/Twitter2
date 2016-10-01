@@ -1,14 +1,13 @@
 <?php
 session_start();
+
 include_once "library.php";
 
-$connection = new mysqli(
-    '127.0.0.1',
-    'root',
-    'coderslab',
-    'twitter2'
-);
+$email = $_POST['email'];
+$pwd = $_POST['pwd'];
 
-Users::loadUserByEmailAndPwd($connection, $_POST['email']);
+$sha1pwd = sha1($pwd);
+
+Users::loadUserByEmailAndPwd($connection, $email, $sha1pwd);
 
 

@@ -2,13 +2,6 @@
 session_start();
 include_once 'library.php';
 
-$mysqli = new mysqli(
-    '127.0.0.1',
-    'root',
-    'coderslab',
-    'twitter2'
-);
-
 //$user = new Users();
 //$user = Users::loadUserById($mysqli, 11);
 //$user->getId();
@@ -35,10 +28,6 @@ $mysqli = new mysqli(
 //$users = Users::loadAllUsers($mysqli);
 //
 //var_dump($users);
-
-
-
-
 ?>
 
 <!DOCTYPE html>
