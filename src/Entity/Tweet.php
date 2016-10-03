@@ -177,16 +177,24 @@ class Tweet
                 '
                 <div class="tweet">
                     <p class="item">%s</p>
-                    <p class="item">%s</p>
-                    <p class="item">%s</p>
-                    <p class="item">%s</p>
+                    <p class="item">%s</p><br>
+                    <p class="item-text">%s</p><br>
+                    <h6 class="item-comments">Comments:</h6>
+                        <ul>
+                            <li></li> 
+                        </ul>
+                        <form method="post" action="addComment.php">
+                        <textarea row="1" cols="50" placeholder="Leave comment" name="text"></textarea><br>
+                        <button type="submit">Comment</button>
+                        </form>
                 </div>
                 ',
-                $tweet->id,
                 $tweet->userId,
-                $tweet->text,
-                $tweet->creationDate
+                $tweet->creationDate,
+                $tweet->text
             );
+            //zapisuje id tweeta do sesji żeby móc ją odebrać w pliku addComment.php
+            $_SESSION['tweet_id'] = $tweet->id;
         }
         $div .= '</div>';
         echo $div;

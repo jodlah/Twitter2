@@ -4,9 +4,9 @@ include_once "library.php";
 
 $user = new Users;
 
-$user->setUsername($_POST['setUsername']);
-$user->setEmail($_POST['setEmail']);
-$user->setPassword($_POST['setPwd']);
+$user->setUsername(htmlspecialchars($_POST['setUsername']));
+$user->setEmail(htmlspecialchars($_POST['setEmail']));
+$user->setPassword(htmlspecialchars($_POST['setPwd']));
 $user->saveToDB($connection);
 
 var_dump($user);

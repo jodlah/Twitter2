@@ -13,7 +13,7 @@ include_once 'library.php';
 $userid = $_SESSION['id'];
 
 if(isset($_POST['text'])) {
-    $text = $_POST['text'];
+    $text = htmlspecialchars($_POST['text']);
 }
 
 $today = gmdate("Y-m-d");
@@ -51,6 +51,8 @@ $today = gmdate("Y-m-d");
 <?php
 
 $tweets = Tweet::printAllTweets($connection);
+
+
 
 ?>
 

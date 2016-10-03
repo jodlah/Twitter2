@@ -3,8 +3,8 @@ session_start();
 
 include_once "library.php";
 
-$email = $_POST['email'];
-$pwd = $_POST['pwd'];
+$email = htmlspecialchars($_POST['email']);
+$pwd = htmlspecialchars($_POST['pwd']);
 
 $sha1pwd = sha1($pwd);
 
