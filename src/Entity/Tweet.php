@@ -170,9 +170,9 @@ class Tweet
     static public function printAllTweets (mysqli $connection)
     {
         $tweets = self::loadAllTweets($connection);
-        //$comment = Comment::loadCommentByTweetId($connection);
         $div = '<div class="container">';
         foreach ($tweets as $tweet) {
+            $comment = Comment::printCommentByTweetId($connection, $tweet->id);
             $div .= sprintf(
                 '
                 <div class="tweet">
@@ -181,7 +181,7 @@ class Tweet
                     <p class="item-text">%s</p><br>
                     <h6 class="item-comments">Comments:</h6>
                         <ul>
-                            <li></li> 
+                        %s 
                         </ul>
                         <form method="post" action="addComment.php">
                         <textarea row="1" cols="50" placeholder="Leave comment" name="text"></textarea><br>
@@ -191,7 +191,8 @@ class Tweet
                 ',
                 $tweet->userId,
                 $tweet->creationDate,
-                $tweet->text
+                $tweet->text,
+                $comment
             );
             //zapisuje id tweeta do sesji żeby móc ją odebrać w pliku addComment.php
             $_SESSION['tweet_id'] = $tweet->id;

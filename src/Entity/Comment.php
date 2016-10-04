@@ -123,21 +123,44 @@ class Comment
     {
         $sql = "SELECT * FROM comments WHERE tweet_id=$tweetId";
 
+        $ret = [];
+
         $result = $connection->query($sql);
 
-        if ($result == true && $result->num_rows == 1) {
-            $row = $result->fetch_assoc();
+        if ($result == true && $result->num_rows != 0) {
+            foreach ($result as $row) {
+                $loadcomment = new Comment();
+                $loadcomment->id = $row['id'];
+                $loadcomment->userId = $row['user_id'];
+                $loadcomment->tweetId = $row['tweet_id'];
+                $loadcomment->creationDate = $row['creation_date'];
+                $loadcomment->text = $row['text'];
 
-            $loadedUser = new Comment();
-            $loadedUser->id = $row['id'];
-            $loadedUser->userId = $row['user_id'];
-            $loadedUser->tweetId = $row['tweet_id'];
-            $loadedUser->text = $row['text'];
-            $loadedUser->creationDate = $row['creation_date'];
-
-            return $loadedUser;
+                $ret[] = $loadcomment;
+            }
         }
+        return $ret;
+    }
 
-        return null;
+    static public function printCommentByTweetId (mysqli $connection)
+    {
+        $tweetId = $_SESSION['tweet_id'];
+
+        $comments = self::loadCommentByTweetId($connection, $tweetId);
+
+        $li = '<li class="list">';
+        foreach ($comments as $comment) {
+            //var_dump($comment);
+            $li .= sprintf(
+                '
+                <p>%s</p>
+                <p>%s</p>
+                ',
+                $comment->creationDate,
+                $comment->text
+            );
+        }
+        $li .='</li>';
+        echo $li;
     }
 }

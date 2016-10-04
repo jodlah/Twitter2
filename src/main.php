@@ -50,7 +50,15 @@ $today = gmdate("Y-m-d");
 
 <?php
 
-$tweets = Tweet::printAllTweets($connection);
+Tweet::printAllTweets($connection);
+
+$tweetId = $_SESSION['tweet_id'];
+
+Comment::printCommentByTweetId($connection, $tweetId);
+
+
+
+
 
 
 
