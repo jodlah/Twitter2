@@ -1,12 +1,14 @@
 <?php
     session_start();
 
+    include_once '_menu.html';
+
     if (isset($_SESSION['id'])) {
-        echo "User Id: " .$_SESSION['id'] .", ". "Username: ". $_SESSION['username'] .", ". "Email: ". $_SESSION['email'];
+        echo "Welcome: ". $_SESSION['username'];
     } else {
         header("Location: index.php");
     }
-    echo "<html><form action='logout.php'><button>LOG OUT</button></form>";
+    //echo "<html><form action='logout.php'><button>LOG OUT</button></form>";
 
 include_once 'library.php';
 
@@ -42,10 +44,12 @@ $today = gmdate("Y-m-d");
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
 </head>
     <body>
-        <form method="post">
-            <textarea rows="5" cols="50" maxlength="140" placeholder="What's going on? " name="text"></textarea>
-            <button type="submit">Tweet</button>
-        </form>
+        <div class="form-group text-center>
+            <form method="post">
+                <textarea class="form-control" id="exempleTextarea" rows="5" cols="50" maxlength="140" placeholder="What's going on? " name="text"></textarea>
+                <button class="btn btn-primary" type="submit">Tweet</button>
+            </form>
+        </div>
 
 
 <?php
@@ -55,12 +59,6 @@ Tweet::printAllTweets($connection);
 $tweetId = $_SESSION['tweet_id'];
 
 Comment::printCommentByTweetId($connection, $tweetId);
-
-
-
-
-
-
 
 ?>
 

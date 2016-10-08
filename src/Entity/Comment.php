@@ -5,6 +5,7 @@ class Comment
     private $id;
     private $userId;
     private $tweetId;
+    private $username;
     private $creationDate;
     private $text;
 
@@ -13,6 +14,7 @@ class Comment
         $this->id = -1;
         $this->userId = "";
         $this->tweetId ="";
+        $this->username ="";
         $this->creationDate = "";
         $this->text = "";
     }
@@ -121,7 +123,10 @@ class Comment
 
     static public function loadCommentByTweetId (mysqli $connection, $tweetId)
     {
-        $sql = "SELECT * FROM comments WHERE tweet_id=$tweetId";
+        $sql = "SELECT * FROM `comments` 
+                JOIN users 
+                ON comments.user_id=users.id 
+                WHERE tweet_id=$tweetId";
 
         $ret = [];
 
@@ -133,6 +138,7 @@ class Comment
                 $loadcomment->id = $row['id'];
                 $loadcomment->userId = $row['user_id'];
                 $loadcomment->tweetId = $row['tweet_id'];
+                $loadcomment->username = $row ['username'];
                 $loadcomment->creationDate = $row['creation_date'];
                 $loadcomment->text = $row['text'];
 
@@ -142,25 +148,30 @@ class Comment
         return $ret;
     }
 
-    static public function printCommentByTweetId (mysqli $connection)
+    //metoda wyświetla komentarze na stronie głównej wczytując je z metody loadComment
+    //ByTweetId
+    static public function printCommentByTweetId (mysqli $connection, $tweetId)
     {
-        $tweetId = $_SESSION['tweet_id'];
-
         $comments = self::loadCommentByTweetId($connection, $tweetId);
 
-        $li = '<li class="list">';
+        $p = '';
         foreach ($comments as $comment) {
             //var_dump($comment);
-            $li .= sprintf(
+            $p .= sprintf(
                 '
-                <p>%s</p>
-                <p>%s</p>
+                <p>
+                    <span id="date">%s</span>
+                    <span id ="username">%s</span>
+                    <span id="comment">%s</span>
+                </p>
+                
                 ',
                 $comment->creationDate,
+                $comment->username,
                 $comment->text
             );
         }
-        $li .='</li>';
-        echo $li;
+        $p .='';
+        return $p;
     }
 }

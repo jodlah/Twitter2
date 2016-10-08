@@ -5,6 +5,7 @@ class Tweet
 {
     private $id;
     private $userId;
+    private $username;
     private $text;
     private $creationDate;
 
@@ -13,6 +14,7 @@ class Tweet
     {
         $this->id = -1;
         $this->userId = "";
+        $this->username ="";
         $this->text = "";
         $this->creationDate = "";
     }
@@ -148,7 +150,9 @@ class Tweet
 
     static public function loadAllTweets(mysqli $connection)
     {
-        $sql = "SELECT * FROM twetty";
+        $sql = "SELECT * FROM `twetty` 
+                JOIN users 
+                ON twetty.user_id=users.id";
         $ret = [];
 
         $result = $connection->query($sql);
@@ -158,6 +162,7 @@ class Tweet
                 $loadedUser = new Tweet();
                 $loadedUser->id = $row['id'];
                 $loadedUser->userId = $row['user_id'];
+                $loadedUser->username = $row['username'];
                 $loadedUser->text = $row['text'];
                 $loadedUser->creationDate = $row['creation_date'];
 
@@ -179,23 +184,20 @@ class Tweet
                     <p class="item">%s</p>
                     <p class="item">%s</p><br>
                     <p class="item-text">%s</p><br>
-                    <h6 class="item-comments">Comments:</h6>
-                        <ul>
-                        %s 
-                        </ul>
-                        <form method="post" action="addComment.php">
+                    <h5 class="item-comments">Comments:</h5>
+                        <div>%s</div>
+                        <form method="post" action="addComment.php?id=%s">
                         <textarea row="1" cols="50" placeholder="Leave comment" name="text"></textarea><br>
                         <button type="submit">Comment</button>
                         </form>
                 </div>
                 ',
-                $tweet->userId,
                 $tweet->creationDate,
+                $tweet->username,
                 $tweet->text,
-                $comment
+                $comment,
+                $tweet->id //przekazuje tweetId metodą GET do addComment.php
             );
-            //zapisuje id tweeta do sesji żeby móc ją odebrać w pliku addComment.php
-            $_SESSION['tweet_id'] = $tweet->id;
         }
         $div .= '</div>';
         echo $div;
