@@ -156,13 +156,12 @@ class Comment
 
         $p = '';
         foreach ($comments as $comment) {
-            //var_dump($comment);
             $p .= sprintf(
                 '
                 <p>
-                    <span id="date">%s</span>
-                    <span id ="username">%s</span>
-                    <span id="comment">%s</span>
+                    <span class="date">%s</span>
+                    <span class ="username">%s:</span>
+                    <span class="text">%s</span>
                 </p>
                 
                 ',

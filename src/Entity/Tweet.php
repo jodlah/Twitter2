@@ -106,26 +106,26 @@ class Tweet
 
 
 
-    static public function loadTweetById(mysqli $connection, $id)
-    {
-        $sql = "SELECT * FROM twetty WHERE id=$id";
-
-        $result = $connection->query($sql);
-
-        if ($result == true && $result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-
-            $loadedUser = new Tweet();
-            $loadedUser->id = $row['id'];
-            $loadedUser->userId = $row['user_id'];
-            $loadedUser->text = $row['text'];
-            $loadedUser->creationDate = $row['creation_date'];
-
-            return $loadedUser;
-        }
-
-        return null;
-    }
+//    static public function loadTweetById(mysqli $connection, $id)
+//    {
+//        $sql = "SELECT * FROM twetty WHERE id=$id";
+//
+//        $result = $connection->query($sql);
+//
+//        if ($result == true && $result->num_rows == 1) {
+//            $row = $result->fetch_assoc();
+//
+//            $loadTweet = new Tweet();
+//            $loadTweet->id = $row['id'];
+//            $loadTweet->userId = $row['user_id'];
+//            $loadTweet->text = $row['text'];
+//            $loadTweet->creationDate = $row['creation_date'];
+//
+//            return $loadTweet;
+//        }
+//
+//        return null;
+//    }
 
     static public function loadTweetByUserId(mysqli $connection, $id)
     {
@@ -136,37 +136,41 @@ class Tweet
 
         if ($result == true && $result->num_rows != 0) {
             foreach ($result as $row) {
-                $loadedUser = new Tweet();
-                $loadedUser->id = $row['id'];
-                $loadedUser->userId = $row['user_id'];
-                $loadedUser->text = $row['text'];
-                $loadedUser->creationDate = $row['creation_date'];
+                $loadtweet= new Tweet();
+                $loadtweet->id = $row['id'];
+                $loadtweet->userId = $row['user_id'];
+                $loadtweet->text = $row['text'];
+                $loadtweet->creationDate = $row['creation_date'];
 
-                $ret[] = $loadedUser;
+                $ret[] = $loadtweet;
             }
         }
         return $ret;
     }
 
+    //wczytuje tweety z bazy danych
     static public function loadAllTweets(mysqli $connection)
     {
-        $sql = "SELECT * FROM `twetty` 
-                JOIN users 
-                ON twetty.user_id=users.id";
+        $sql = "SELECT twetty.*, users.username 
+                FROM twetty 
+                RIGHT JOIN users 
+                ON twetty.user_id=users.id
+                ORDER BY creation_date DESC ";
+
         $ret = [];
 
         $result = $connection->query($sql);
 
         if ($result == true && $result->num_rows != 0) {
             foreach ($result as $row) {
-                $loadedUser = new Tweet();
-                $loadedUser->id = $row['id'];
-                $loadedUser->userId = $row['user_id'];
-                $loadedUser->username = $row['username'];
-                $loadedUser->text = $row['text'];
-                $loadedUser->creationDate = $row['creation_date'];
+                $loadtweet = new Tweet();
+                $loadtweet->id = $row['id'];
+                $loadtweet->userId = $row['user_id'];
+                $loadtweet->username = $row['username'];
+                $loadtweet->text = $row['text'];
+                $loadtweet->creationDate = $row['creation_date'];
 
-                $ret[] = $loadedUser;
+                $ret[] = $loadtweet;
             }
         }
         return $ret;
@@ -175,21 +179,23 @@ class Tweet
     static public function printAllTweets (mysqli $connection)
     {
         $tweets = self::loadAllTweets($connection);
-        $div = '<div class="container">';
+        $div = '<div class="">';
         foreach ($tweets as $tweet) {
-            $comment = Comment::printCommentByTweetId($connection, $tweet->id);
+            $comment = Comment::printCommentByTweetId($connection, $tweet->id); //moment przekazania id tweet do metody printCommentByTweetId
             $div .= sprintf(
                 '
                 <div class="tweet">
-                    <p class="item">%s</p>
-                    <p class="item">%s</p><br>
-                    <p class="item-text">%s</p><br>
-                    <h5 class="item-comments">Comments:</h5>
+                    <p class="item date">%s</p>
+                    <p class="item username">%s</p><br>
+                    <p class="item text">%s</p><br>
+                        <div class="well">
+                        <h6 class="comments">Comments:</h6>
                         <div>%s</div>
-                        <form method="post" action="addComment.php?id=%s">
-                        <textarea row="1" cols="50" placeholder="Leave comment" name="text"></textarea><br>
-                        <button type="submit">Comment</button>
-                        </form>
+                            <form method="post" action="addComment.php?id=%s">
+                                <textarea class="form-control" id="exempleTextarea" row="1" cols="50" placeholder="Leave comment" name="text"></textarea><br>
+                                <button class="btn btn-primary btn-sm" id="btn-comment" type="submit">Post</button>
+                            </form>
+                        </div>
                 </div>
                 ',
                 $tweet->creationDate,
@@ -202,5 +208,4 @@ class Tweet
         $div .= '</div>';
         echo $div;
     }
-
 }

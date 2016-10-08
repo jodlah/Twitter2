@@ -1,19 +1,33 @@
 .container {
     display: flex;
     flex-direction: column-reverse;
-    width: 50%;
 }
 
 .form-group {
-    width: 50%;
+    width: 47%;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
+#btn-tweet {
+    float: right;
+    margin: 10px;
+}
+
+#btn-comment {
+    float: right;
+    margin-top: -15px;
+
+}
+
 .tweet {
-    border: 1px solid black;
-    margin: 5px;
+    -moz-box-shadow: 0 0 2px black;
+    -webkit-box-shadow: 0 0 2px black;
+    box-shadow: 0 0 2px black;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .item {
@@ -21,6 +35,86 @@
     font-size: 12px;
 }
 
-.item-text {
-    font-size: 18px;
+.date {
+    color: lightgrey;
+    font-size: 12px;
 }
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.comments {
+    text-decoration: underline;
+}
+
+.text {
+    font-size: 14px;
+}
+
+
+/* Formularz logowania */
+.loginbody {
+    background: #eee !important;
+}
+
+.wrapper {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.form-signin {
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.form-control {
+    position: relative;
+    font-size: 50px;
+    height: auto;
+    padding: 10px;
+@include box-sizing(border-box);
+}
+
+input[type="text"] {
+    margin-bottom: -15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.form-signin-heading {
+    margin-bottom: -20px;
+}
+
+/* szerokość przycisków oraz nagłówek index.php (login form )*/
+
+label span {
+    font-family: 'Kaushan Script', cursive;
+    font-size: 32px;
+}
+
+p {
+    font-family: Tahoma, sans-serif;
+    font-size: 14px;
+}
+
+.loginbtn {
+    width: 49.2%;
+}
+
+
+
+
+
+

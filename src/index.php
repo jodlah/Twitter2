@@ -2,32 +2,7 @@
 session_start();
 include_once 'library.php';
 
-//$user = new Users();
-//$user = Users::loadUserById($mysqli, 11);
-//$user->getId();
 
-
-//var_dump($user);
-
-//$tweet = new Tweet(30);
-//$tweet->setText('Lorem ipsum');
-//$tweet->setCreationDate('2016-09-29');
-//$tweet->saveToTweetyDB($mysqli);
-//
-//
-//var_dump($tweet);
-
-
-//$user = Users::loadUserById($mysqli, 11);
-//
-//var_dump($user);
-//
-//$user->setUsername('Robert');
-//$user->saveToDB($mysqli);
-//
-//$users = Users::loadAllUsers($mysqli);
-//
-//var_dump($users);
 ?>
 
 <!DOCTYPE html>
@@ -35,22 +10,20 @@ include_once 'library.php';
 <head>
     <meta charset="UTF-8">
     <title>Twitter</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 </head>
-<body>
+<body class="loginbody">
+    <div class="wrapper">
+        <form class ="form-signin" method="post" action="login.php">
+            <label class="form-signin-heading"><span>Twitter 2.0</span><p>Please login</p></label><br><br>
+                <input class="form-control" type="text" name="email" placeholder="E-mail Address"><br>
+                <input class="form-control" type="password" name="pwd" placeholder="Password"><br>
+            <button class="loginbtn btn btn-lg btn-primary type="submit" name="submit">LOGIN</button>
+            <button formaction="signUpForm.html" class="loginbtn btn btn-lg btn-success type="submit">SIGN UP</button>
+        </form>
 
-<div>
-    <form method="post" action="login.php">
-        <label>LOGIN</label><br><br>
-            <input type="text" name="email" placeholder="e-mail"><br>
-            <input type="password" name="pwd" placeholder="password"><br>
-        <button type="submit" name="submit">LOGIN</button>
-    </form>
-</div>
-
-<div>
-    <form method="post" action="signUpForm.html">
-        <button type="submit">SIGN UP</button>
-    </form>
-</div>
+    </div>
 </body>
 </html>

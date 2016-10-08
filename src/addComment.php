@@ -8,7 +8,9 @@ $userid = $_SESSION['id'];
 $tweetId = $_GET['id'];
 $today = gmdate("Y-m-d");
 
-var_dump($tweetId);
+var_dump($_SESSION);
+
+var_dump($userid, $tweetId);
 
 if (isset($_POST['text'])) {
     $text = htmlspecialchars($_POST['text']);
@@ -25,5 +27,4 @@ if(isset ($_POST['text'])) {
     $comment->saveToCommentsDB($connection);
 
     header("Location: main.php");
-
 }
