@@ -156,6 +156,23 @@ class Users
         return true;
     }
 
+    static public function loadIdByUsername(mysqli $connection, $username)
+    {
+        $safeUsername = $connection->escape_string($username);
+
+        $sql = "SELECT id FROM users WHERE username='$safeUsername'";
+
+        $result = $connection->query($sql);
+
+        if ($result == true && $result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+
+            return $row['id'];
+        }
+
+        return null;
+    }
+
 }
 
 

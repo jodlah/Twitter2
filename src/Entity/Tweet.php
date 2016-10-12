@@ -93,7 +93,7 @@ class Tweet
             $sql = "UPDATE twetty SET userId='$this->userId',
                                  text='$this->text',
                                  creationDate='$this->creationDate'
-                    WHERE id=$this->id;";
+                    WHERE id=$this->id";
 
             $result = $connection->query($sql);
 

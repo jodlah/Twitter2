@@ -8,9 +8,6 @@ $userid = $_SESSION['id'];
 $tweetId = $_GET['id'];
 $today = gmdate("Y-m-d");
 
-var_dump($_SESSION);
-
-var_dump($userid, $tweetId);
 
 if (isset($_POST['text'])) {
     $text = htmlspecialchars($_POST['text']);
